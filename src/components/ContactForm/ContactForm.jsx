@@ -9,7 +9,7 @@ function ContactForm() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const { data: contacts } = useFetchContactsQuery();
-  const [addContact, { isLoading }] = useAddContactMutation();
+  const [addContact, { isLoading, error }] = useAddContactMutation();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -41,37 +41,38 @@ function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label className={s.label}>
-        Name:
-        <input
-          type="text"
-          name="name"
-          className={s.input}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-          value={name}
-          onChange={handleChange}
-        ></input>
-      </label>
-      <label className={s.label}>
-        Phone:
-        <input
-          type="tel"
-          name="number"
-          className={s.input}
-          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-          required
-          value={number}
-          onChange={handleChange}
-        ></input>
-      </label>
-      <button type="submit" className={s.btnAdd} disabled={isLoading}>
-        ADD CONTACT
-      </button>
-    </form>
+    <div>
+      {error && <p>Cannot add new contact</p>}
+      <form onSubmit={handleSubmit} onChange={handleChange}>
+        <label className={s.label}>
+          Name:
+          <input
+            type="text"
+            name="name"
+            className={s.input}
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+            required
+            value={name}
+          ></input>
+        </label>
+        <label className={s.label}>
+          Phone:
+          <input
+            type="tel"
+            name="number"
+            className={s.input}
+            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+            required
+            value={number}
+          ></input>
+        </label>
+        <button type="submit" className={s.btnAdd} disabled={isLoading}>
+          ADD CONTACT
+        </button>
+      </form>
+    </div>
   );
 }
 

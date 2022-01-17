@@ -13,14 +13,18 @@ function ContactList({ contacts }) {
     getVisibleContacts(state, contacts)
   );
 
-  const [deleteContact] = useDeleteContactMutation();
+  const [deleteContact, { isLoading }] = useDeleteContactMutation();
 
   return (
     <ul className={s.list}>
       {visibleContacts.map(({ id, name, number }) => (
         <li key={id}>
           {name}: {number}
-          <button className={s.btnDelete} onClick={() => deleteContact(id)}>
+          <button
+            className={s.btnDelete}
+            disabled={isLoading}
+            onClick={() => deleteContact(id)}
+          >
             X
           </button>
         </li>
