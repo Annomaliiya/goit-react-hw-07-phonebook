@@ -15,7 +15,7 @@ export const contactsApi = createApi({
 
         addContact: builder.mutation({
             query: contact => ({
-                url: `/contacts12`,
+                url: `/contacts`,
                 method: 'POST',
                 body: contact,
             }),
